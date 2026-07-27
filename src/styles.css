@@ -1,15 +1,61 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --header: #18181b;
+  --header-foreground: #f4f4f4;
+  --border: #272727;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #272727;
+  --secondary-foreground: #ededed;
+  --muted: #272727;
+  --muted-foreground: #a1a1aa;
+  --destructive: #ff6467;
+  --destructive-foreground: #fafafa;
+  --card: #0e0e11;
+  --card-foreground: #fafafa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+}
 
 * {
   box-sizing: border-box;
+  border-color: var(--border);
 }
 
 html,
 body,
 #app {
-  min-height: 100%;
+  min-height: 100svh;
 }
 
 body {
   margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter Variable', sans-serif;
+}
+
+button:not(:disabled),
+[role='button']:not(:disabled) {
+  cursor: pointer;
 }
