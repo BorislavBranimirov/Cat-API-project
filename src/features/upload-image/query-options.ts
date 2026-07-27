@@ -1,4 +1,6 @@
 import { mutationOptions } from '@tanstack/react-query';
+import { getUploadedImagesQueryOptions } from '#/features/gallery/query-options';
+import { api } from '#/lib/api/api';
 
 /**
  * Mutation for uploading images.
@@ -7,25 +9,12 @@ import { mutationOptions } from '@tanstack/react-query';
 export const uploadImageMutationOptions = ({ userId }: { userId: string }) =>
   mutationOptions({
     mutationFn: async ({ image }: { image: File }) => {
-      const formData = new FormData();
-      formData.append('file', image);
-      formData.append('sub_id', userId);
-
-      const res = await fetch('https://api.thecatapi.com/v1/images/upload', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'x-api-key': import.meta.env.VITE_CAT_API_KEY,
-        },
+      await api.uploadImage({ userId, image });
+    },
+    onSuccess: (_, __, ___, context) => {
+      // Invalidate gallery cache on upload
+      context.client.invalidateQueries({
+        queryKey: getUploadedImagesQueryOptions({ userId }).queryKey,
       });
-      if (!res.ok) {
-        const message = await res.text();
-        throw new Error(message);
-      }
-
-      const data: { approved: 0 | 1 } = await res.json();
-      if (data.approved === 0) {
-        throw new Error('Failed to verify image.');
-      }
     },
   });
