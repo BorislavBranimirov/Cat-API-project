@@ -17,3 +17,8 @@ export const imageUploadResponseSchema = z.object({
 export const imageFavouriteResponseSchema = z.object({
   id: z.number(),
 });
+
+export const imageVoteResponseSchema = z.object({
+  id: z.number(),
+  value: z.number(),
+});

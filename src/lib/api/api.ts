@@ -2,6 +2,7 @@ import {
   galleryImagesSchema,
   imageFavouriteResponseSchema,
   imageUploadResponseSchema,
+  imageVoteResponseSchema,
 } from './validators';
 
 const API_KEY = import.meta.env.VITE_CAT_API_KEY;
@@ -131,5 +132,46 @@ export const api = {
       const message = await res.text();
       throw new Error(message);
     }
+  },
+
+  /**
+   * Vote on an image using the Cat API.
+   * @param param0.userId the id to segment images by
+   * @param param0.imageId the id of the image to vote on
+   * @param param0.value the vote value to assign to the image
+   */
+  voteOnImage: async ({
+    userId,
+    imageId,
+    value,
+  }: {
+    userId: string;
+    imageId: string;
+    value: number;
+  }) => {
+    const res = await fetch('https://api.thecatapi.com/v1/votes', {
+      method: 'POST',
+      body: JSON.stringify({
+        sub_id: userId,
+        image_id: imageId,
+        value,
+      }),
+      headers: {
+        'x-api-key': API_KEY,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) {
+      const message = await res.text();
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+    const parsedRes = imageVoteResponseSchema.safeParse(data);
+    if (!parsedRes.success) {
+      throw new Error('Failed to vote on image');
+    }
+
+    return parsedRes.data;
   },
 };

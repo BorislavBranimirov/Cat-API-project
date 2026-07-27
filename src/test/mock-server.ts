@@ -16,8 +16,19 @@ export const mockServer = setupServer(
         id: 1,
       });
     }),
-    http.delete('https://api.thecatapi.com/v1/favourites/1', () => {
+    http.delete('https://api.thecatapi.com/v1/favourites/:id', () => {
       return new HttpResponse(null);
     }),
+    http.post<Record<string, never>, { value: number }>(
+      'https://api.thecatapi.com/v1/votes',
+      async ({ request }) => {
+        const { value } = await request.clone().json();
+
+        return HttpResponse.json({
+          id: 1,
+          value,
+        });
+      },
+    ),
   ],
 );
