@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Loader2 } from 'lucide-react';
 import { getUploadedImagesQueryOptions } from './query-options';
+import GalleryItem from './gallery-item';
 
 const EmptyGalleryState = () => {
   return (
@@ -98,12 +99,7 @@ const GalleryView = () => {
         {data.pages.map((page) => (
           <React.Fragment key={page.page}>
             {page.images.map((image) => (
-              <div
-                key={image.id}
-                className="w-full aspect-square border rounded-lg overflow-hidden"
-              >
-                <img className="w-full h-full object-cover" src={image.url} />
-              </div>
+              <GalleryItem key={image.id} image={image} />
             ))}
           </React.Fragment>
         ))}

@@ -6,7 +6,14 @@ export const galleryImageSchema = z.object({
   vote: z.object({ id: z.number(), value: z.number() }).optional(),
   favourite: z.object({ id: z.number() }).optional(),
 });
-
 export type GalleryImage = z.infer<typeof galleryImageSchema>;
 
 export const galleryImagesSchema = z.array(galleryImageSchema);
+
+export const imageUploadResponseSchema = z.object({
+  approved: z.union([z.literal(0), z.literal(1)]),
+});
+
+export const imageFavouriteResponseSchema = z.object({
+  id: z.number(),
+});

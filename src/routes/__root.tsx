@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
@@ -22,6 +23,7 @@ function RootComponent() {
           <Outlet />
         </main>
       </div>
+      <Toaster theme="dark" richColors />
       <TanStackDevtools
         config={{
           position: 'bottom-right',
