@@ -8,7 +8,9 @@ const GalleryItem = ({ image }: { image: GalleryImage }) => {
 
   return (
     <div className="relative w-full aspect-square flex flex-col border rounded-lg overflow-hidden">
-      <img className="w-full h-full object-cover" src={image.url} />
+      <div className="flex-1 min-h-0">
+        <img className="w-full h-full object-cover" src={image.url} />
+      </div>
       <FavouriteBtn imageId={image.id} favouriteId={image.favourite?.id} />
       <VoteCounter value={voteValue} />
       <VoteControls imageId={image.id} value={voteValue} />
